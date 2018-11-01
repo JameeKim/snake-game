@@ -6,21 +6,21 @@ where
 import qualified Graphics.Gloss.Interface.Pure.Game
                                                as G
 import           SnakeGame.World                ( World(..)
-                                                , newWorldVoid
+                                                , newWorld
                                                 )
 import           SnakeGame.Snake                ( changeDirection )
 import           SnakeGame.Move                 ( Direction(..) )
 
 eventHandler :: G.Event -> World -> World
-eventHandler (G.EventKey key keyState _ _) world =
-    keyEventHandler key keyState world
-eventHandler _ world = world
+eventHandler event@G.EventKey{} world = keyEventHandler event world
+eventHandler (G.EventResize x)  world = resizeEventHandler x world
+eventHandler _                  world = world
 
-keyEventHandler :: G.Key -> G.KeyState -> World -> World
-keyEventHandler (G.SpecialKey key) G.Down world@NewWorld { worldSnake = snake }
-    = if worldIsOver world
+keyEventHandler :: G.Event -> World -> World
+keyEventHandler (G.EventKey (G.SpecialKey key) G.Down _ _) world =
+    if worldIsOver world
         then case key of
-            G.KeySpace -> newWorldVoid world
+            G.KeySpace -> newWorld world
             _          -> world
         else case key of
             G.KeyUp    -> changeSnake U
@@ -30,5 +30,9 @@ keyEventHandler (G.SpecialKey key) G.Down world@NewWorld { worldSnake = snake }
             _          -> world
   where
     changeSnake direction =
-        world { worldSnake = changeDirection snake direction }
-keyEventHandler _ _ world = world
+        world { worldSnake = changeDirection (worldSnake world) direction }
+keyEventHandler _ world = world
+
+resizeEventHandler :: (Int, Int) -> World -> World
+resizeEventHandler x world = world { worldResolution = (px, px) }
+    where px = uncurry min x

@@ -4,8 +4,8 @@
 module SnakeGame.World
     ( World(..)
     , ups
+    , initialWorld
     , newWorld
-    , newWorldVoid
     , update
     , worldBorder
     , putApple
@@ -43,37 +43,30 @@ resolution = 1024
 ups :: Int
 ups = 10
 
-newWorld :: Int -> World
-newWorld seed = NewWorld
+initialWorld :: Int -> World
+initialWorld seed = NewWorld
     { worldIsOver     = True
     , worldResolution = (resolution, resolution)
     , worldSize       = size
-    , worldSnake      = Snake
-        [(-maxC + 3, maxC - 1), (-maxC + 2, maxC - 1), (-maxC + 1, maxC - 1)]
-        R
-    , worldApple      = (-maxC + 1, maxC - 1)
+    , worldSnake      = newSnake maxC
+    , worldApple      = newApple maxC
     , worldRandom     = R.mkStdGen seed
     }
     where maxC = C.maxCellCoord size
 
-newWorldVoid :: World -> World
-newWorldVoid NewWorld { worldResolution = res, worldRandom = r } = putApple
-    NewWorld
-        { worldIsOver     = False
-        , worldResolution = res
-        , worldSize       = size
-        , worldSnake      = Snake
-            [ (-maxC + 3, maxC - 1)
-            , (-maxC + 2, maxC - 1)
-            , (-maxC + 1, maxC - 1)
-            ]
-            R
-        , worldApple      = (0, 0)
-        , worldRandom     = r1
-        }
+newWorld :: World -> World
+newWorld world = putApple NewWorld
+    { worldIsOver     = False
+    , worldResolution = worldResolution world
+    , worldSize       = wSize
+    , worldSnake      = newSnake maxC
+    , worldApple      = (0, 0)
+    , worldRandom     = r1
+    }
   where
-    (_ :: Bool, r1) = R.random r
-    maxC            = C.maxCellCoord size
+    (_ :: Bool, r1) = R.random $ worldRandom world
+    wSize           = worldSize world
+    maxC            = C.maxCellCoord wSize
 
 update :: Float -> World -> World
 update _ world
@@ -106,6 +99,14 @@ putApple world = if cellIsSnake world (x, y)
     (x, gen1) = R.randomR (-m, m) $ worldRandom world
     (y, gen2) = R.randomR (-m, m) gen1
     m         = maxCoordNum world - 1
+
+newSnake :: Int -> Snake
+newSnake maxC = Snake
+    [(-maxC + 3, maxC - 1), (-maxC + 2, maxC - 1), (-maxC + 1, maxC - 1)]
+    R
+
+newApple :: Int -> Cell
+newApple maxC = (-maxC + 1, maxC - 1)
 
 cellIsApple :: World -> Cell -> Bool
 cellIsApple world pt = pt == worldApple world
