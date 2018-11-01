@@ -1,0 +1,29 @@
+name:                snake-game
+version:             0.1.0.0
+github:              "JameeKim/snake-game"
+license:             MIT
+author:              "Jamee Kim"
+maintainer:          "jameekim@nodaplife.me"
+copyright:           "2018 Jamee Kim"
+
+description:         Snake game in Haskell
+
+dependencies:
+- base >= 4.7 && < 5
+
+library:
+  source-dirs: src
+  dependencies:
+  - gloss
+  - random
+
+executables:
+  snake-game-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - snake-game
