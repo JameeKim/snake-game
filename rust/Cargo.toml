@@ -1,0 +1,21 @@
+[package]
+name = "rust"
+version = "0.1.0"
+authors = ["Jamee Kim <jameekim@nodaplife.me>"]
+
+[[bin]]
+name = "snake_game"
+path = "src/main.rs"
+
+[lib]
+name = "rust_snake_game"
+
+[features]
+default = ["shred/nightly"]
+
+[dependencies]
+amethyst = "0.9.0"
+rand = "0.5.5"
+serde = "1.0.80"
+serde_derive = "1.0.80"
+shred = "0.7.1"

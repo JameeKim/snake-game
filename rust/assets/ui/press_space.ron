@@ -1,0 +1,18 @@
+#![enable(implicit_some)]
+Text(
+    transform: (
+        id: "press_space",
+        anchor: BottomMiddle,
+        x: 0.0,
+        y: 100.0,
+        width: 300.0,
+        height: 25.0,
+        transparent: true,
+    ),
+    text: (
+        text: "Press \"space\" to start",
+        font_size: 25.0,
+        color: (1.0, 1.0, 1.0, 1.0),
+        font: File("font/square.ttf", Ttf, ()),
+    ),
+)

@@ -1,0 +1,49 @@
+#![enable(implicit_some)]
+Container(
+    transform: (
+        id: "score_container",
+        anchor: Middle,
+        x: 0.0,
+        y: 0.0,
+        width: 300.0,
+        height: 25.0,
+        transparent: true,
+    ),
+    background: None,
+    children: [
+        Text(
+            transform: (
+                id: "score_label",
+                anchor: Middle,
+                x: -25.0,
+                y: 0.0,
+                width: 150.0,
+                height: 25.0,
+                transparent: true,
+            ),
+            text: (
+                text: "Your score:",
+                font_size: 25.0,
+                color: (1.0, 1.0, 1.0, 1.0),
+                font: File("font/square.ttf", Ttf, ()),
+            ),
+        ),
+        Text(
+            transform: (
+                id: "score_number",
+                anchor: Middle,
+                x: 75.0,
+                y: 0.0,
+                width: 100.0,
+                height: 50.0,
+                transparent: true,
+            ),
+            text: (
+                text: "0",
+                font_size: 25.0,
+                color: (1.0, 1.0, 1.0, 1.0),
+                font: File("font/square.ttf", Ttf, ()),
+            ),
+        ),
+    ],
+)

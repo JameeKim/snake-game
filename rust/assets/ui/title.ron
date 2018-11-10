@@ -1,0 +1,66 @@
+#![enable(implicit_some)]
+Container(
+    transform: (
+        id: "game_title",
+        anchor: Middle,
+        x: 0.0,
+        y: 100.0,
+        width: 300.0,
+        height: 200.0,
+        transparent: true,
+    ),
+    background: None,
+    children: [
+        Text(
+            transform: (
+                id: "game_title_1",
+                anchor: Middle,
+                x: 0.0,
+                y: 35.0,
+                width: 200.0,
+                height: 25.0,
+                transparent: true,
+            ),
+            text: (
+                text: "The",
+                font_size: 25.0,
+                color: (1.0, 1.0, 1.0, 1.0),
+                font: File("font/square.ttf", Ttf, ()),
+            ),
+        ),
+        Text(
+            transform: (
+                id: "game_title_2",
+                anchor: Middle,
+                x: 0.0,
+                y: 0.0,
+                width: 300.0,
+                height: 50.0,
+                transparent: true,
+            ),
+            text: (
+                text: "Snake Game",
+                font_size: 50.0,
+                color: (1.0, 1.0, 1.0, 1.0),
+                font: File("font/square.ttf", Ttf, ()),
+            ),
+        ),
+        Text(
+            transform: (
+                id: "game_title_3",
+                anchor: Middle,
+                x: 0.0,
+                y: -30.0,
+                width: 200.0,
+                height: 25.0,
+                transparent: true,
+            ),
+            text: (
+                text: "in Rust",
+                font_size: 25.0,
+                color: (1.0, 1.0, 1.0, 1.0),
+                font: File("font/square.ttf", Ttf, ()),
+            ),
+        ),
+    ],
+)
